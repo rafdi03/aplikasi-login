@@ -4,36 +4,32 @@
 #include <algorithm>
 #include <conio.h>
 #include <cstdlib>
-#include <cctype> // Library untuk validasi huruf dan angka
+#include <cctype>
 
 using namespace std;
 
-// Struktur data untuk menyimpan informasi pengguna
 struct User {
     string username;
     string password;
     int points;
 };
 
-// Struktur data untuk menyimpan poin dalam billboard
 struct Score {
     string username;
     int points;
 };
 
-// Fungsi untuk mencari pengguna berdasarkan nama pengguna
 int findUser(const vector<User>& users, const string& username) {
     for (int i = 0; i < users.size(); i++) {
         if (users[i].username == username) {
-            return i; // Pengguna ditemukan, mengembalikan indeksnya
+            return i;
         }
     }
-    return -1; // Pengguna tidak ditemukan
+    return -1; 
 }
 
-// Fungsi untuk memainkan permainan tebak angka
 int playGame() {
-    int randomNumber = rand() % 50 + 1; // Angka acak antara 1 dan 50
+    int randomNumber = rand() % 50 + 1;
     int guess;
     int attempts = 0;
 
@@ -67,10 +63,10 @@ bool isAlphaNumeric(const string& str) {
 }
 
 int main() {
-    vector<User> users; // Vector untuk menyimpan pengguna yang terdaftar
-    vector<Score> billboard; // Vector untuk menyimpan poin dalam billboard
-    bool isLoggedIn = false; // Status login
-    string currentUsername; // Untuk menyimpan nama pengguna yang sedang login
+    vector<User> users; 
+    vector<Score> billboard; 
+    bool isLoggedIn = false; 
+    string currentUsername;
 
     while (true) {
         cout << "============================================" << endl;
@@ -92,40 +88,40 @@ int main() {
         int choice;
         cin >> choice;
 
-        // Membersihkan layar konsol
+    
         system("cls");
 
         if (isLoggedIn) {
-            if (choice == 1) { // Bermain Tebak Angka
-                int attempts = playGame(); // Bermain tebak angka
+            if (choice == 1) { 
+                int attempts = playGame(); 
                 for (User& user : users) {
                     if (user.username == currentUsername) {
-                        user.points += (10 - attempts); // Menambah poin
-                        billboard.push_back({user.username, user.points}); // Menyimpan ke billboard
+                        user.points += (10 - attempts); 
+                        billboard.push_back({user.username, user.points});
                     }
                 }
-            } else if (choice == 2) { // Billboard
+            } else if (choice == 2) { 
                 cout << "=== Billboard ===" << endl;
                 cout << "Nama\t\tPoin\t\tJuara" << endl;
 
-                // Mengurutkan billboard berdasarkan poin secara menurun
+                
                 sort(billboard.begin(), billboard.end(), [](const Score& a, const Score& b) {
                     return a.points > b.points;
                 });
 
-                int numToShow = min(3, static_cast<int>(billboard.size())); // Jumlah pemain yang akan ditampilkan
+                int numToShow = min(3, static_cast<int>(billboard.size())); 
 
                 for (int i = 0; i < numToShow; i++) {
                     cout << billboard[i].username << "\t\t" << billboard[i].points << "\t\tJuara " << (i + 1) << endl;
                 }
-            } else if (choice == 3) { // Logout
+            } else if (choice == 3) { 
                 isLoggedIn = false;
                 currentUsername = "";
             }
         }
 
         if (!isLoggedIn) {
-            if (choice == 1) { // Login
+            if (choice == 1) { 
                 string username, password;
                 cout << "=== Login ===" << endl;
                 cout << "Masukkan nama pengguna: ";
@@ -146,7 +142,7 @@ int main() {
                 } else {
                     cout << "Maaf, nama pengguna tidak ditemukan." << endl;
                 }
-            } else if (choice == 2) { // Register
+            } else if (choice == 2) { 
                 string username, password;
                 cout << "=== Register ===" << endl;
                 cout << "Masukkan nama pengguna baru: ";
@@ -163,12 +159,12 @@ int main() {
                 } else {
                     cout << "Masukkan kata sandi baru: ";
                     cin >> password;
-                    users.push_back({username, password, 0}); // Inisialisasi poin awal dengan 0
+                    users.push_back({username, password, 0}); 
                     cout << "Registrasi berhasil! Selamat datang, " << username << "!" << endl;
                 }
             } else if (choice == 4) { // Exit dari Program
                 cout << "Terima kasih telah mencoba. Sampai jumpa!" << endl;
-                break; // Keluar dari program
+                break;
             }
         }
     }
